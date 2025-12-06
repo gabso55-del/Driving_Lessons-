@@ -7,8 +7,12 @@ export const GoogleSheetsService = {
 
     async init() {
         // Check if we have a valid URL
+        console.log('GoogleSheetsService.init() - SCRIPT_URL:', this.SCRIPT_URL);
         if (this.SCRIPT_URL && this.SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE') {
             this.isConnected = true;
+            console.log('✅ GoogleSheetsService.isConnected set to TRUE');
+        } else {
+            console.log('⚠️ GoogleSheetsService.isConnected remains FALSE');
         }
         return Promise.resolve();
     },

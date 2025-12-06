@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const contentArea = document.getElementById('content-area');
     const navItems = document.querySelectorAll('.nav-item');
 
+    // Initialize Storage Service (connects to Google Sheets if configured)
+    await StorageService.init();
+
     // Navigation logic
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {

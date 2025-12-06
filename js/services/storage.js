@@ -4,15 +4,18 @@ export const StorageService = {
     useCloud: false,
 
     async init() {
-        // Cloud Init Disabled for Stability until User Connects
-        /*
-        if(localStorage.getItem('spreadsheet_id')) {
-            try {
-                await GoogleSheetsService.init();
-                this.useCloud = GoogleSheetsService.isConnected;
-            } catch(e) { console.warn('Cloud init failed', e); }
+        // Try to initialize Google Sheets automatically
+        try {
+            await GoogleSheetsService.init();
+            this.useCloud = GoogleSheetsService.isConnected;
+            if (this.useCloud) {
+                console.log('✅ Connected to Google Sheets!');
+            } else {
+                console.log('⚠️ Google Sheets not configured, using LocalStorage');
+            }
+        } catch (e) {
+            console.warn('Cloud init failed, using LocalStorage', e);
         }
-        */
     },
 
     async getStudents() {
