@@ -325,23 +325,41 @@ function getSheetData(sheet) {
   });
 }
 
-// Helper: Create success response
-function createSuccessResponse(message) {
+// Helper: Create success response with JSONP support
+function createSuccessResponse(message, callback) {
+  const response = {
+    success: true,
+    message: message
+  };
+  
+  // Support JSONP to avoid CORS
+  if (callback) {
+    return ContentService
+      .createTextOutput(callback + '(' + JSON.stringify(response) + ')')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  
   return ContentService
-    .createTextOutput(JSON.stringify({
-      success: true,
-      message: message
-    }))
+    .createTextOutput(JSON.stringify(response))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-// Helper: Create error response
-function createErrorResponse(message) {
+// Helper: Create error response with JSONP support
+function createErrorResponse(message, callback) {
+  const response = {
+    error: message,
+    success: false
+  };
+  
+  // Support JSONP to avoid CORS
+  if (callback) {
+    return ContentService
+      .createTextOutput(callback + '(' + JSON.stringify(response) + ')')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  
   return ContentService
-    .createTextOutput(JSON.stringify({
-      error: message,
-      success: false
-    }))
+    .createTextOutput(JSON.stringify(response))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
