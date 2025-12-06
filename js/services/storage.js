@@ -1,4 +1,4 @@
-import { GoogleSheetsService } from './sheets.js';
+import { FirebaseService } from './firebase.js';
 
 export const StorageService = {
     useCloud: false,
@@ -7,18 +7,18 @@ export const StorageService = {
     lastSyncTime: null,
 
     async init() {
-        // Try to initialize Google Sheets automatically
+        // Try to initialize Firebase automatically
         try {
-            await GoogleSheetsService.init();
-            this.useCloud = GoogleSheetsService.isConnected;
+            await FirebaseService.init();
+            this.useCloud = FirebaseService.isConnected;
             if (this.useCloud) {
-                console.log('✅ Connected to Google Sheets!');
+                console.log('✅ Connected to Firebase!');
                 this.lastSyncTime = localStorage.getItem('last_sync_time');
             } else {
-                console.log('⚠️ Google Sheets not configured, using LocalStorage');
+                console.log('⚠️ Firebase not configured, using LocalStorage');
             }
         } catch (e) {
-            console.warn('Cloud init failed, using LocalStorage', e);
+            console.warn('Firebase init failed, using LocalStorage', e);
         }
     },
 
@@ -96,7 +96,7 @@ export const StorageService = {
         // Debounce cloud sync (wait 2 seconds)
         if (this.useCloud) {
             this.debouncedSync(async () => {
-                await GoogleSheetsService.saveTable('Students', students);
+                await FirebaseService.saveStudents(students);
             });
         }
     },
@@ -113,7 +113,7 @@ export const StorageService = {
         // Debounce cloud sync (wait 2 seconds)
         if (this.useCloud) {
             this.debouncedSync(async () => {
-                await GoogleSheetsService.saveTable('Lessons', lessons);
+                await FirebaseService.saveLessons(lessons);
             });
         }
     },
@@ -121,7 +121,7 @@ export const StorageService = {
     async forceSyncNow() {
         // Manual sync - bypass debouncing
         if (!this.useCloud) {
-            alert('⚠️ לא מחובר ל-Google Sheets');
+            alert('⚠️ לא מחובר ל-Firebase');
             return;
         }
 
@@ -131,8 +131,8 @@ export const StorageService = {
             const lessons = JSON.parse(localStorage.getItem('lessons')) || [];
 
             await Promise.all([
-                GoogleSheetsService.saveTable('Students', students),
-                GoogleSheetsService.saveTable('Lessons', lessons)
+                FirebaseService.saveStudents(students),
+                FirebaseService.saveLessons(lessons)
             ]);
 
             this.updateSyncStatus('synced');
@@ -145,15 +145,15 @@ export const StorageService = {
     },
 
     async refreshFromCloud() {
-        // Manually fetch fresh data from Google Sheets
+        // Manually fetch fresh data from Firebase
         if (!this.useCloud) {
-            alert('⚠️ לא מחובר ל-Google Sheets');
+            alert('⚠️ לא מחובר ל-Firebase');
             return;
         }
 
         try {
-            const students = await GoogleSheetsService.fetchTable('Students');
-            const lessons = await GoogleSheetsService.fetchTable('Lessons');
+            const students = await FirebaseService.getStudents();
+            const lessons = await FirebaseService.getLessons();
 
             localStorage.setItem('students', JSON.stringify(students));
             localStorage.setItem('lessons', JSON.stringify(lessons));
@@ -167,13 +167,13 @@ export const StorageService = {
     },
 
     async connectCloud() {
-        await GoogleSheetsService.init();
-        GoogleSheetsService.login();
-        // Listener for success event
-        window.addEventListener('google-auth-success', () => {
+        await FirebaseService.init();
+        if (FirebaseService.isConnected) {
             this.useCloud = true;
-            alert('מחובר לגוגל דרייב בהצלחה!');
+            alert('מחובר ל-Firebase בהצלחה!');
             location.reload(); // Reload to fetch fresh data
-        });
+        } else {
+            alert('שגיאה בהתחברות ל-Firebase');
+        }
     }
 };
