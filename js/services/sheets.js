@@ -1,6 +1,6 @@
 // Optimized Google Sheets Service with request deduplication and caching
 export const GoogleSheetsService = {
-    SCRIPT_URL: 'https://script.google.com/macros/s/AKfycby8gvVoPaL7k7uZRZ73gIJeSK-Xr1qAvwy-2GtEFXXie1XZ0n73VDOxPLoElPpPQQGA/exec',
+    SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzn3i3YHUeaDSZ1a15mSNxk1cP7gB3A7y3psSPKSTmnDru_7f773rSV1bVBMgFfVgz-/exec',
     isConnected: false,
 
     // Request deduplication
