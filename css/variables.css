@@ -1,0 +1,61 @@
+:root {
+    /* --- Palette: Modern iOS Clean --- */
+    --primary-color: #007AFF;
+    /* iOS Blue */
+    --primary-gradient: linear-gradient(180deg, #007AFF 0%, #0056B3 100%);
+    --accent-color: #5856D6;
+    /* iOS Purple */
+    --danger-color: #FF3B30;
+    /* iOS Red */
+    --success-color: #34C759;
+    /* iOS Green */
+    --warning-color: #FF9500;
+    /* iOS Orange */
+
+    /* --- Backgrounds --- */
+    --bg-color: #F2F2F7;
+    /* iOS System Grouped Background */
+    --surface-color: #FFFFFF;
+    --surface-color-2: #E5E5EA;
+    /* iOS System Fill */
+
+    /* --- Text --- */
+    --text-primary: #000000;
+    --text-secondary: #8E8E93;
+    /* iOS Label Gray */
+    --text-light: #FFFFFF;
+
+    /* --- Effects --- */
+    --border-radius: 12px;
+    --border-radius-lg: 20px;
+    /* Soft, diffused shadow */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    /* --- Layout --- */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+
+    /* --- Typography --- */
+    --font-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* Hidden scrollbar for mobile feel */

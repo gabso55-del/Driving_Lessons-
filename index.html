@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DriveMaster</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f5f7fa">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <!-- Google Identity & API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Content Area -->
+        <div id="content-area"></div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-view="dashboard">
+                <i class="fas fa-home"></i>
+                <span>ראשי</span>
+            </a>
+            <a href="#" class="nav-item" data-view="students">
+                <i class="fas fa-users"></i>
+                <span>תלמידים</span>
+            </a>
+            <a href="#" class="nav-item" data-view="schedule">
+                <i class="fas fa-calendar-alt"></i>
+                <span>יומן</span>
+            </a>
+            <a href="#" class="nav-item" data-view="reports">
+                <i class="fas fa-chart-line"></i>
+                <span>דוחות</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Logic -->
+    <script type="module" src="js/app.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // navigator.serviceWorker.register('./sw.js');
+            });
+        }
+    </script>
+</body>
+
+</html>

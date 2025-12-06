@@ -1,0 +1,518 @@
+/* --- Schedule Grid System --- */
+
+/* Day View */
+.day-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 80px;
+}
+
+.time-slot {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border: 1px solid #eee;
+}
+
+.time-slot:active {
+    transform: scale(0.98);
+    background: #fafafa;
+}
+
+.time-slot.empty {
+    border: 2px dashed #ddd;
+    background: transparent;
+    color: #aaa;
+    box-shadow: none;
+}
+
+.time-slot.active {
+    border-right: 5px solid transparent;
+}
+
+.time-slot.border-success {
+    border-right-color: var(--success-color);
+}
+
+.time-slot.border-danger {
+    border-right-color: var(--danger-color);
+}
+
+.bg-success-light {
+    background: #f0fdf4;
+}
+
+.bg-danger-light {
+    background: #fef2f2;
+}
+
+.slot-time {
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 60px;
+    flex-shrink: 0;
+}
+
+.slot-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.slot-details {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 2px;
+}
+
+.success-text {
+    color: var(--success-color);
+}
+
+/* Week Grid View */
+.week-grid-wrapper {
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+    margin-bottom: 80px;
+}
+
+.week-grid-header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+.header-cell {
+    flex: 1;
+    min-width: 90px;
+    text-align: center;
+    padding: 10px 5px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-left: 1px solid #eee;
+    color: #555;
+}
+
+.header-cell.time-col {
+    min-width: 50px;
+    flex: 0 0 50px;
+    background: white;
+    position: sticky;
+    right: 0;
+    z-index: 12;
+}
+
+.header-cell.today {
+    color: var(--primary-color);
+    background: #e3f2fd;
+}
+
+.grid-row {
+    display: flex;
+    border-bottom: 1px solid #f9f9f9;
+    height: 50px;
+}
+
+.time-cell {
+    flex: 0 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: #999;
+    background: #fff;
+    position: sticky;
+    right: 0;
+    z-index: 5;
+    border-left: 1px solid #eee;
+}
+
+.grid-cell {
+    flex: 1;
+    min-width: 90px;
+    border-left: 1px dashed #f5f5f5;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-cell.empty:hover {
+    background: #f8f8f8;
+}
+
+.grid-cell.empty i {
+    opacity: 0;
+    color: #ccc;
+    transition: 0.2s;
+}
+
+.grid-cell.empty:hover i {
+    opacity: 1;
+}
+
+.grid-cell.filled {
+    margin: 3px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.status-paid {
+    background: var(--success-color);
+}
+
+.status-unpaid {
+    background: var(--danger-color);
+}
+
+/* --- Modals (RESTORED) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+}
+
+.modal {
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    max-height: 85vh;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    margin-bottom: 15px;
+}
+
+/* --- Inputs (RESTORED) --- */
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: block;
+}
+
+/* --- Buttons --- */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-secondary {
+    background: white;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #666;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.btn-fab {
+    position: fixed;
+    bottom: 90px;
+    left: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+/* --- Quick Actions --- */
+.quick-actions-bar {
+    display: grid;
+    gap: 10px;
+    margin-top: 15px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.btn-action-done {
+    background: var(--success-color);
+    color: white;
+}
+
+.btn-action-debt {
+    background: var(--warning-color);
+    color: white;
+}
+
+.btn-action-delete {
+    background: white;
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+    grid-column: span 2;
+}
+
+/* --- Payment Cards --- */
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.payment-method-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.payment-method-card.selected {
+    border-color: var(--primary-color);
+    background: #e3f2fd;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* --- Brand Logos --- */
+.brand-bit {
+    color: #00b4b4;
+    font-weight: 800;
+    border-color: #00b4b4;
+}
+
+.brand-bit.selected {
+    background: #00b4b4;
+    color: white;
+}
+
+.brand-paybox {
+    color: #5a287f;
+    font-weight: 800;
+    border-color: #5a287f;
+}
+
+.brand-paybox.selected {
+    background: #5a287f;
+    color: white;
+}
+
+.brand-bank {
+    color: #444;
+    font-weight: 800;
+    border-color: #444;
+}
+
+.brand-bank.selected {
+    background: #444;
+    color: white;
+}
+
+.payment-amount-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-align: center;
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid var(--primary-color);
+    width: 150px;
+    margin: 10px auto;
+    display: block;
+}
+
+/* --- Israeli Bank Grid --- */
+.bank-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.bank-option {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 5px;
+    font-size: 0.85rem;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.1s;
+}
+
+.bank-option:active {
+    transform: scale(0.95);
+}
+
+.bank-option.selected {
+    border: 2px solid var(--primary-color);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Bank Brand Colors */
+.bank-hapoalim {
+    border-color: #d81b60;
+    color: #d81b60;
+    background: #fff0f5;
+}
+
+.bank-leumi {
+    border-color: #1e88e5;
+    color: #1e88e5;
+    background: #e3f2fd;
+}
+
+.bank-discount {
+    border-color: #43a047;
+    color: #43a047;
+    background: #e8f5e9;
+}
+
+.bank-mizrahi {
+    border-color: #fb8c00;
+    color: #fb8c00;
+    background: #fff3e0;
+}
+
+.bank-beinleumi {
+    border-color: #0d47a1;
+    color: #0d47a1;
+    background: #e8eaf6;
+}
+
+.bank-yahav {
+    border-color: #00897b;
+    color: #00897b;
+    background: #e0f2f1;
+}
+
+.bank-poaley-agudat {
+    border-color: #5d4037;
+    color: #5d4037;
+    background: #efebe9;
+}
+
+.bank-mercantile {
+    border-color: #3949ab;
+    color: #3949ab;
+    background: #e8eaf6;
+}
+
+.bank-massad {
+    border-color: #7cb342;
+    color: #7cb342;
+    background: #f1f8e9;
+}
+
+/* Reference Input */
+.reference-input-container {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

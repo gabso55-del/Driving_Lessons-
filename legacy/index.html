@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveMaster - ניהול מורה נהיגה</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-steering-wheel"></i>
+                <span>DriveMaster</span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="active" data-view="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>ראשי</span>
+                    </li>
+                    <li data-view="students">
+                        <i class="fas fa-users"></i>
+                        <span>תלמידים</span>
+                    </li>
+                    <li data-view="schedule">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>יומן</span>
+                    </li>
+                    <li data-view="reports">
+                        <i class="fas fa-chart-line"></i>
+                        <span>דוחות</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>לוח בקרה</h1>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Instructor&background=0D8ABC&color=fff" alt="Profile">
+                </div>
+            </header>
+
+            <div id="content-area">
+                <!-- Dynamic Content Will Be Loaded Here -->
+                <div class="dashboard-view">
+                    <div class="stat-card">
+                        <h3>שיעורים היום</h3>
+                        <p class="stat-number">5</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>תלמידים פעילים</h3>
+                        <p class="stat-number">12</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>הכנסה יומית</h3>
+                        <p class="stat-number">₪850</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

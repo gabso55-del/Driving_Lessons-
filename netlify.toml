@@ -1,0 +1,6 @@
+# DrivingInstructor App - Netlify
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

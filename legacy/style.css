@@ -1,0 +1,357 @@
+:root {
+    /* Premium Color Palette */
+    --primary-color: #1a237e;
+    /* Deep Blue */
+    --secondary-color: #ffd700;
+    /* Gold */
+    --accent-color: #00bcd4;
+    /* Cyan */
+    --background-dark: #121212;
+    --surface-dark: #1e1e1e;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --danger-color: #f44336;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Heebo', sans-serif;
+    background-color: var(--background-dark);
+    color: var(--text-primary);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    height: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: var(--surface-dark);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-xl);
+}
+
+.main-nav ul {
+    list-style: none;
+}
+
+.main-nav li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    color: var(--text-secondary);
+}
+
+.main-nav li:hover,
+.main-nav li.active {
+    background-color: rgba(255, 215, 0, 0.1);
+    color: var(--secondary-color);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--secondary-color);
+}
+
+#content-area {
+    padding: var(--spacing-lg);
+    height: 100%;
+    /* Ensure full height for scrolling views */
+    overflow: hidden;
+    /* Let child views handle scrolling */
+}
+
+/* Dashboard Cards */
+.dashboard-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.stat-card {
+    background-color: var(--surface-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border-top: 4px solid var(--secondary-color);
+}
+
+.stat-card h3 {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-card .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        right: -250px;
+        height: 100%;
+        z-index: 1000;
+        transition: right 0.3s;
+    }
+
+    .sidebar.open {
+        right: 0;
+    }
+}
+
+/* Student Management Styles */
+.students-view {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    height: 100%;
+}
+
+.students-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* FIXED: Vertical Student List with Scroll */
+.student-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    overflow-y: auto;
+    padding-bottom: 20px;
+    max-height: calc(100vh - 200px);
+    /* Adjust based on header */
+}
+
+.student-card {
+    background-color: var(--surface-dark);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--accent-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    /* Prevent shrinking */
+}
+
+.student-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.student-info h4 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.student-info p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #283593;
+    /* Darker Blue */
+}
+
+/* Modal Styles */
+.modal {
+
+    .form-group input {
+        width: 100%;
+        padding: var(--spacing-sm);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: var(--background-dark);
+        color: var(--text-primary);
+        border-radius: var(--radius-sm);
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-lg);
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        color: var(--text-secondary);
+        border: 1px solid var(--text-secondary);
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+    }
+}
+
+/* Schedule / Calendar Styles */
+.schedule-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.schedule-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.calendar-container {
+    flex: 1;
+    overflow: auto;
+    /* Enable scrolling in both directions */
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* FIXED: Horizontal Scroll for Calendar */
+.calendar-grid {
+    display: grid;
+    /* 60px time column + 7 days * min 200px each */
+    grid-template-columns: 60px repeat(7, minmax(200px, 1fr));
+    width: max-content;
+    /* Force grid to take full required width */
+    min-width: 100%;
+}
+
+.calendar-header-cell {
+    background-color: var(--surface-dark);
+    padding: var(--spacing-sm);
+    text-align: center;
+    border-bottom: 2px solid var(--secondary-color);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.time-slot-label {
+    background-color: var(--surface-dark);
+    padding: var(--spacing-xs);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    left: 0;
+    z-index: 15;
+}
+
+.calendar-cell {
+    background-color: var(--background-dark);
+    min-height: 50px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.calendar-cell:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.calendar-lesson {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 4px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-left: 3px solid var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+}
