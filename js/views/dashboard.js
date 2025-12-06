@@ -19,7 +19,14 @@ export async function renderDashboard(container) {
     // Connection Button
     const isCloud = StorageService.useCloud;
     const connectBtn = isCloud
-        ? `<span style="color:var(--success-color); font-size:0.9em; display:inline-flex; align-items:center; gap:5px;"><i class="fas fa-check-circle"></i> מחובר לדרייב</span>`
+        ? `<div style="display:flex; gap:10px; justify-content:center; align-items:center;">
+             <span style="color:var(--success-color); font-size:0.9em; display:inline-flex; align-items:center; gap:5px;">
+               <i class="fas fa-check-circle"></i> מחובר לדרייב
+             </span>
+             <button id="btn-sync-now" class="btn btn-sm btn-secondary" style="background:white; color:#333; font-size:0.85em;">
+               <i class="fas fa-sync"></i> סנכרן עכשיו
+             </button>
+           </div>`
         : `<button id="btn-connect-cloud" class="btn btn-sm btn-secondary" style="background:white; color:#333;"><i class="fab fa-google-drive" style="color:#34a853;"></i> התחבר לגיבוי</button>`;
 
     const html = `
@@ -49,6 +56,13 @@ export async function renderDashboard(container) {
                 </button>
                 <button class="btn btn-secondary" onclick="document.querySelector('[data-view=students]').click()">
                     <i class="fas fa-user-friends"></i> תלמידים
+                </button>
+            </div>
+            
+            <!-- Logout Button -->
+            <div style="text-align:center; margin-bottom:20px;">
+                <button id="btn-logout" class="btn btn-secondary" style="background:#fff; color:#666; font-size:0.85em;">
+                    <i class="fas fa-sign-out-alt"></i> התנתק
                 </button>
             </div>
 
@@ -90,9 +104,31 @@ export async function renderDashboard(container) {
 
     container.innerHTML = html;
 
-    // Attach Event
-    const btn = document.getElementById('btn-connect-cloud');
-    if (btn) {
-        btn.onclick = () => StorageService.connectCloud();
+    // Attach Events
+    const btnConnect = document.getElementById('btn-connect-cloud');
+    if (btnConnect) {
+        btnConnect.onclick = () => StorageService.connectCloud();
+    }
+
+    const btnSync = document.getElementById('btn-sync-now');
+    if (btnSync) {
+        btnSync.onclick = async () => {
+            btnSync.disabled = true;
+            btnSync.innerHTML = '<i class="fas fa-sync fa-spin"></i> מסנכרן...';
+            await StorageService.forceSyncNow();
+            btnSync.disabled = false;
+            btnSync.innerHTML = '<i class="fas fa-sync"></i> סנכרן עכשיו';
+        };
+    }
+
+    const btnLogout = document.getElementById('btn-logout');
+    if (btnLogout) {
+        btnLogout.onclick = () => {
+            if (confirm('בטוח שאתה רוצה להתנתק?')) {
+                import('../services/auth.js').then(module => {
+                    module.AuthService.logout();
+                });
+            }
+        };
     }
 }

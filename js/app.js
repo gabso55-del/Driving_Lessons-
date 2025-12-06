@@ -1,4 +1,5 @@
 import { StorageService } from './services/storage.js';
+import { AuthService } from './services/auth.js';
 
 // Placeholder renders until files are created
 const renderDashboard = (container) => container.innerHTML = '<h2>Dashboard Loading...</h2>';
@@ -7,6 +8,12 @@ const renderSchedule = (container) => container.innerHTML = '<h2>Schedule Loadin
 const renderReports = (container) => container.innerHTML = '<h2>Reports Loading...</h2>';
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Check authentication first
+    if (!AuthService.isAuthenticated()) {
+        AuthService.showLoginScreen();
+        return;
+    }
+
     const contentArea = document.getElementById('content-area');
     const navItems = document.querySelectorAll('.nav-item');
 
