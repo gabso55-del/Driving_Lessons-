@@ -1,61 +1,51 @@
-# 🔧 Fix CORS Error - Google Apps Script
+# 🔧 CRITICAL FIX - CORS Headers
 
-## הבעיה
-```
-Access-Control-Allow-Origin header is missing
-```
-זו בעיה ידועה של Google Apps Script עם POST requests.
+## הבעיה שזיהינו
+Google Apps Script לא מטפל ב-OPTIONS requests (CORS preflight) אוטומטית.
 
-## הפתרון - Deploy חדש!
+## התיקון - עדכן את ה-Apps Script
 
-### שלב 1: במסך Apps Script
-
-1. לחץ **Deploy** → **Manage deployments**
-2. **לא** ללחוץ על העיפרון (edit)!
-3. במקום, לחץ **New deployment** (שוב)
-4. בחר **Web app**
-5. הגדרות:
-   - Description: "v2 - CORS Fix"
-   - Execute as: **Me**
-   - Who has access: **Anyone**
-6. **Deploy**
-
-### שלב 2: העתק URL החדש
-
-אתה תקבל URL חדש שנראה דומה אבל עם מזהה אחר בסוף.
-
-### שלב 3: עדכן ב-sheets.js
+### הוסף את הפונקציה הזו לסקריפט שלך:
 
 ```javascript
-SCRIPT_URL: 'YOUR_NEW_URL_HERE',
-```
-
-### למה זה קורה?
-
-Google Apps Script לא מוסיף CORS headers אוטומטית ל-deployments קיימים.
-רק **deployment חדש** יכלול את ה-headers הנדרשים.
-
-## אם זה עדיין לא עובד
-
-אם גם אחרי deployment חדש יש בעיה, תצטרך להוסיף את הקוד הזה ל-Apps Script:
-
-```javascript
-function doPost(e) {
-  // Add CORS headers
-  const output = ContentService.createTextOutput();
-  output.setMimeType(ContentService.MimeType.JSON);
-  
-  // Your existing code here...
-  
-  return output;
-}
-
+// OPTIONS handler - Handle CORS preflight requests
 function doOptions(e) {
   return ContentService
-    .createTextOutput()
-    .setMimeType(ContentService.MimeType.JSON)
-    .setContent(JSON.stringify({result: 'ok'}));
+    .createTextOutput('')
+    .setMimeType(ContentService.MimeType.TEXT);
 }
 ```
 
-אבל בדרך כלל deployment חדש מספיק! 🎯
+**איפה להוסיף?** מיד אחרי `doGet()` ולפני `doPost()`.
+
+### שלבי התיקון:
+
+1. **פתח Apps Script**
+   - Extensions → Apps Script
+
+2. **הוסף את `doOptions`**
+   - העתק את הפונקציה למעלה
+   - הדבק מיד אחרי `doGet()`
+
+3. **שמור** (Ctrl+S)
+
+4. **Deploy חדש שוב!**
+   - Deploy → New deployment
+   - Web app → Anyone  
+   - תקבל URL **חדש** (שלישי)
+   - העתק אותו
+
+5. **עדכן `sheets.js`** עם ה-URL החדש
+
+## למה זה קורה?
+
+כשהדפדפן שולח POST request לdomain אחר (Netlify → Google), הוא:
+1. **שולח OPTIONS request קודם** (preflight)
+2. בודק אם השרת מאפשר CORS
+3. רק אז שולח את ה-POST
+
+**בלי `doOptions()`** - Apps Script לא יודע לטפל ב-OPTIONS → CORS נכשל!
+
+## זה התיקון הסופי! 🎯
+
+אחרי זה הכל אמור לעבוד בצורה מושלמת.

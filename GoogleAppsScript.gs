@@ -117,6 +117,13 @@ function doGet(e) {
   }
 }
 
+// OPTIONS handler - Handle CORS preflight requests
+function doOptions(e) {
+  return ContentService
+    .createTextOutput('')
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
 // POST handler - Save, Move, or Restore data
 function doPost(e) {
   try {
